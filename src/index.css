@@ -3,68 +3,73 @@
 @tailwind utilities;
 
 :root {
-  --retro-teal: #00FF9D;
-  --retro-purple: #BD00FF;
-  --retro-black: #000;
-  --retro-dark-gray: #1a1a1a;
-  --retro-gray: #333;
+  --primary-blue: #0066FF;
+  --primary-purple: #6366F1;
+  --accent-green: #10B981;
+  --accent-orange: #F59E0B;
+  --accent-red: #EF4444;
+  --dark-bg: #0F172A;
+  --card-bg: #1E293B;
+  --border-color: #334155;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #64748B;
 }
 
 * {
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Press Start 2P', monospace;
-  background: var(--retro-black);
-  color: var(--retro-teal);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--dark-bg);
+  color: var(--text-primary);
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* CRT Effect */
-.crt-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(transparent 50%, rgba(0, 255, 157, 0.03) 50%);
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 1000;
+/* Modern Glass Effect */
+.glass-card {
+  background: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-.crt-overlay::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+.glass-card:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
+  transition: all 0.3s ease;
 }
 
-/* Pixel Button */
-.pixel-button {
-  @apply bg-transparent border-2 border-current px-4 py-2 text-xs font-bold uppercase tracking-wider;
-  image-rendering: pixelated;
-  transition: all 0.1s ease;
+/* Modern Button */
+.modern-button {
+  @apply px-6 py-3 rounded-xl font-medium transition-all duration-300 transform;
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-purple));
+  border: none;
+  color: white;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
-.pixel-button:hover {
-  @apply shadow-lg;
-  box-shadow: 0 0 20px currentColor;
+.modern-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
 }
 
-.pixel-button:active {
-  transform: scale(0.95);
+.modern-button:active {
+  transform: translateY(0);
 }
 
-.pixel-button::before {
+.modern-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.modern-button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -75,87 +80,44 @@ body {
   transition: left 0.5s;
 }
 
-.pixel-button:hover::before {
+.modern-button:hover::before {
   left: 100%;
 }
 
-/* Text Effects */
-.typewriter {
+/* Choice Button */
+.choice-button {
+  @apply p-4 rounded-xl border-2 transition-all duration-300 text-left;
+  background: rgba(30, 41, 59, 0.6);
+  border-color: var(--border-color);
+  cursor: pointer;
+}
+
+.choice-button:hover {
+  border-color: var(--primary-blue);
+  background: rgba(0, 102, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 102, 255, 0.2);
+}
+
+.choice-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Progress Bar */
+.progress-container {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 4px;
   overflow: hidden;
-  border-right: 2px solid var(--retro-teal);
-  white-space: nowrap;
-  animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: var(--retro-teal); }
-}
-
-/* Coin Animation */
-.coin {
-  width: 20px;
-  height: 20px;
-  background: var(--retro-teal);
-  border-radius: 50%;
-  position: absolute;
-  animation: coinFly 1s ease-in-out forwards;
-}
-
-@keyframes coinFly {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100px) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-/* Glitch Effect */
-.glitch {
-  position: relative;
-  color: var(--retro-teal);
-  font-size: 1.2em;
-  animation: glitch 0.3s infinite;
-}
-
-@keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
-}
-
-/* Retro Panel */
-.retro-panel {
-  background: linear-gradient(135deg, var(--retro-dark-gray), var(--retro-gray));
-  border: 2px solid var(--retro-teal);
-  box-shadow: 
-    inset 0 0 20px rgba(0, 255, 157, 0.1),
-    0 0 20px rgba(0, 255, 157, 0.3);
-}
-
-/* Health Bar / Progress Bar */
-.progress-bar {
-  background: var(--retro-dark-gray);
-  border: 1px solid var(--retro-teal);
-  overflow: hidden;
-  position: relative;
 }
 
 .progress-fill {
-  background: linear-gradient(90deg, var(--retro-teal), var(--retro-purple));
-  height: 100%;
-  transition: width 0.5s ease;
+  height: 12px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--accent-green), var(--primary-blue));
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
@@ -175,13 +137,99 @@ body {
   100% { transform: translateX(100%); }
 }
 
-/* Responsive Text */
+/* Badge Styles */
+.badge {
+  @apply px-3 py-1 rounded-full text-xs font-medium;
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-blue));
+  color: white;
+}
+
+.badge-earned {
+  animation: badgeEarn 0.6s ease-out;
+}
+
+@keyframes badgeEarn {
+  0% { transform: scale(0) rotate(180deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(90deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* Money Animation */
+.money-change {
+  animation: moneyPop 0.8s ease-out;
+}
+
+@keyframes moneyPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Floating Animation */
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Glow Effect */
+.glow {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  body {
-    font-size: 10px;
+  .glass-card {
+    border-radius: 12px;
+    margin: 0 8px;
   }
   
-  .pixel-button {
-    @apply px-2 py-1 text-xs;
+  .modern-button {
+    @apply px-4 py-2 text-sm;
   }
+  
+  .choice-button {
+    @apply p-3;
+  }
+}
+
+/* Loading Spinner */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(99, 102, 241, 0.3);
+  border-top: 4px solid var(--primary-purple);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Typewriter Effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--primary-blue);
+  white-space: nowrap;
+  animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--primary-blue); }
+}
+
+/* Smooth Transitions */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Target } from 'lucide-react'
 
 interface ProgressBarProps {
   current: number
@@ -10,21 +11,31 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ current, max, label })
   const percentage = Math.min((current / max) * 100, 100)
   
   return (
-    <div className="mt-4">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-retro-teal">{label}</span>
-        <span className="text-sm text-retro-purple">
+    <div>
+      <div className="flex justify-between items-center mb-3">
+        <div className="flex items-center gap-2">
+          <Target className="w-5 h-5 text-blue-400" />
+          <span className="text-slate-300 font-medium">{label}</span>
+        </div>
+        <span className="text-slate-400 text-sm">
           ${current.toLocaleString()} / ${max.toLocaleString()}
         </span>
       </div>
-      <div className="progress-bar h-4 rounded">
+      
+      <div className="progress-container">
         <div 
-          className="progress-fill h-full rounded transition-all duration-500"
+          className="progress-fill"
           style={{ width: `${percentage}%` }}
         ></div>
       </div>
-      <div className="text-xs text-center mt-1 text-retro-teal">
-        {percentage.toFixed(1)}% to goal
+      
+      <div className="flex justify-between items-center mt-2">
+        <span className="text-xs text-slate-500">
+          {percentage.toFixed(1)}% complete
+        </span>
+        <span className="text-xs text-slate-500">
+          ${(max - current).toLocaleString()} remaining
+        </span>
       </div>
     </div>
   )
