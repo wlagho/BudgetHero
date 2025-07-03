@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useSupabase } from '../hooks/useSupabase'
-import { Gamepad2, Coins, Trophy, Zap, Star, Play } from 'lucide-react'
+import { Gamepad2, Coins, Trophy, Zap, Star, Play, AlertCircle } from 'lucide-react'
 
 interface LandingPageProps {
   onStartGame: () => void
@@ -8,15 +8,19 @@ interface LandingPageProps {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onStartGame }) => {
   const [isStarting, setIsStarting] = useState(false)
-  const { signInAnonymously } = useSupabase()
+  const [error, setError] = useState<string | null>(null)
+  const { signInAnonymously, isOfflineMode } = useSupabase()
 
   const handleStart = async () => {
     setIsStarting(true)
+    setError(null)
+    
     try {
       await signInAnonymously()
       onStartGame()
     } catch (error) {
       console.error('Error starting game:', error)
+      setError('Failed to start game. Please try again.')
       setIsStarting(false)
     }
   }
@@ -83,6 +87,29 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStartGame }) => {
                 <span>AI-Powered Stories</span>
               </div>
             </div>
+
+            {/* Offline Mode Notice */}
+            {isOfflineMode && (
+              <div className="bg-yellow-500/20 border border-yellow-500/50 rounded p-4 mb-6">
+                <div className="flex items-center gap-2 text-yellow-400 mb-2">
+                  <AlertCircle className="w-5 h-5" />
+                  <span className="font-bold">Demo Mode</span>
+                </div>
+                <p className="text-sm text-yellow-200">
+                  Running in offline mode. Progress won't be saved between sessions.
+                </p>
+              </div>
+            )}
+
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-500/20 border border-red-500/50 rounded p-4 mb-6">
+                <div className="flex items-center gap-2 text-red-400">
+                  <AlertCircle className="w-5 h-5" />
+                  <span>{error}</span>
+                </div>
+              </div>
+            )}
 
             <button
               onClick={handleStart}
