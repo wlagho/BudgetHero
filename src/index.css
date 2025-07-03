@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --retro-teal: #00FF9D;
+  --retro-purple: #BD00FF;
+  --retro-black: #000;
+  --retro-dark-gray: #1a1a1a;
+  --retro-gray: #333;
+}
+
+* {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+body {
+  font-family: 'Press Start 2P', monospace;
+  background: var(--retro-black);
+  color: var(--retro-teal);
+  overflow-x: hidden;
+}
+
+/* CRT Effect */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent 50%, rgba(0, 255, 157, 0.03) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.crt-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+/* Pixel Button */
+.pixel-button {
+  @apply bg-transparent border-2 border-current px-4 py-2 text-xs font-bold uppercase tracking-wider;
+  image-rendering: pixelated;
+  transition: all 0.1s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pixel-button:hover {
+  @apply shadow-lg;
+  box-shadow: 0 0 20px currentColor;
+}
+
+.pixel-button:active {
+  transform: scale(0.95);
+}
+
+.pixel-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.pixel-button:hover::before {
+  left: 100%;
+}
+
+/* Text Effects */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--retro-teal);
+  white-space: nowrap;
+  animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--retro-teal); }
+}
+
+/* Coin Animation */
+.coin {
+  width: 20px;
+  height: 20px;
+  background: var(--retro-teal);
+  border-radius: 50%;
+  position: absolute;
+  animation: coinFly 1s ease-in-out forwards;
+}
+
+@keyframes coinFly {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+  color: var(--retro-teal);
+  font-size: 1.2em;
+  animation: glitch 0.3s infinite;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Retro Panel */
+.retro-panel {
+  background: linear-gradient(135deg, var(--retro-dark-gray), var(--retro-gray));
+  border: 2px solid var(--retro-teal);
+  box-shadow: 
+    inset 0 0 20px rgba(0, 255, 157, 0.1),
+    0 0 20px rgba(0, 255, 157, 0.3);
+}
+
+/* Health Bar / Progress Bar */
+.progress-bar {
+  background: var(--retro-dark-gray);
+  border: 1px solid var(--retro-teal);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--retro-teal), var(--retro-purple));
+  height: 100%;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Responsive Text */
+@media (max-width: 768px) {
+  body {
+    font-size: 10px;
+  }
+  
+  .pixel-button {
+    @apply px-2 py-1 text-xs;
+  }
+}

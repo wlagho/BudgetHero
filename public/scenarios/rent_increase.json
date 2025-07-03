@@ -1,0 +1,105 @@
+{
+  "id": "rent_increase",
+  "title": "Rent Shock!",
+  "description": "Your landlord just announced a $300/month rent increase!",
+  "situation": "You come home to find a letter under your door. Your rent is going up by $300 next month! Your current rent is $1,200/month. You have $2,000 in savings and make $3,500/month after taxes. What do you do?",
+  "choices": [
+    {
+      "id": "negotiate",
+      "text": "Negotiate with the landlord",
+      "aiPrompt": "User chose to negotiate rent increase with landlord. Generate outcome for negotiation attempt.",
+      "consequences": [
+        {
+          "probability": 0.4,
+          "outcome": "Your negotiation skills impressed the landlord! They agreed to a smaller increase.",
+          "moneyChange": 150,
+          "badgeEarned": "Silver Tongue"
+        },
+        {
+          "probability": 0.4,
+          "outcome": "The landlord wasn't impressed, but you tried! They reduced the increase slightly.",
+          "moneyChange": 50
+        },
+        {
+          "probability": 0.2,
+          "outcome": "Your negotiation backfired! The landlord is now considering additional fees.",
+          "moneyChange": -100,
+          "consequence": "Landlord is now suspicious of you"
+        }
+      ]
+    },
+    {
+      "id": "move",
+      "text": "Look for a new apartment",
+      "aiPrompt": "User chose to move to find cheaper housing. Generate outcome for apartment hunting.",
+      "consequences": [
+        {
+          "probability": 0.3,
+          "outcome": "You found an amazing apartment for less money! Moving was the right choice.",
+          "moneyChange": 300,
+          "badgeEarned": "Smart Mover"
+        },
+        {
+          "probability": 0.5,
+          "outcome": "Moving was expensive, but you found a cheaper place. It'll pay off long-term!",
+          "moneyChange": -200
+        },
+        {
+          "probability": 0.2,
+          "outcome": "The moving costs were higher than expected, and the new place has issues!",
+          "moneyChange": -500,
+          "consequence": "New apartment has problems"
+        }
+      ]
+    },
+    {
+      "id": "accept",
+      "text": "Accept the increase and tighten budget",
+      "aiPrompt": "User chose to accept rent increase and cut expenses. Generate outcome for budget tightening.",
+      "consequences": [
+        {
+          "probability": 0.3,
+          "outcome": "You accepted the increase without question. Your landlord thinks you're wealthy now!",
+          "moneyChange": -300,
+          "consequence": "Landlord may increase rent again soon"
+        },
+        {
+          "probability": 0.7,
+          "outcome": "You paid the increase but started a side hustle to cover it. Entrepreneurial spirit!",
+          "moneyChange": -200,
+          "badgeEarned": "Side Hustler"
+        }
+      ]
+    },
+    {
+      "id": "roommate",
+      "text": "Find a roommate to share costs",
+      "aiPrompt": "User chose to find roommate to reduce housing costs. Generate outcome for roommate search.",
+      "consequences": [
+        {
+          "probability": 0.3,
+          "outcome": "Your roommate is amazing! They cook, clean, and split everything fairly.",
+          "moneyChange": 400,
+          "badgeEarned": "Social Butterfly"
+        },
+        {
+          "probability": 0.4,
+          "outcome": "Your roommate is... quirky. They eat your food but pay rent on time.",
+          "moneyChange": 200,
+          "consequence": "Roommate steals snacks"
+        },
+        {
+          "probability": 0.3,
+          "outcome": "Your roommate turned out to be a nightmare! They're loud and messy.",
+          "moneyChange": 100,
+          "consequence": "Annoying roommate"
+        }
+      ]
+    }
+  ],
+  "category": "housing",
+  "difficulty": "medium",
+  "nextScenarios": ["car_repair", "job_promotion", "windfall"],
+  "requiredMoney": 0,
+  "tags": ["housing", "negotiation", "budgeting", "roommates"]
+}
