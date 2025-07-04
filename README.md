@@ -1,17 +1,15 @@
-# BudgetHero - AI Microlearning Financial Coach 🎮💰🤖
+# BudgetHero - AI Microlearning Financial Coach 🎮💰
 
-**Winner of the Vibe Coding Hackathon 2025 - "From Idea to Income" Track**
+An AI-powered microlearning platform that teaches financial literacy through gamified scenarios. Built for the modern Kenyan market with intelligent coaching, voice interactions, and real-world monetization strategies.
 
-An AI-powered microlearning platform that teaches financial literacy through gamified Kenyan scenarios. Built for the modern African market with intelligent coaching, voice interactions, and real-world monetization strategies.
-
-## 🏆 Hackathon Achievement
+## 🏆 Hackathon Deliverables
 
 **Theme**: "FROM IDEA TO INCOME: BUILDING MONETIZABLE TOOLS"
 **Category**: AI Educational Platforms - Microlearning Coach
 **Focus**: Financial literacy education with clear revenue model and community impact
 
 ### 🎯 Problem Solved
-- **Education Gap**: Poor financial literacy among young Kenyan professionals
+- **Education Gap**: Poor financial literacy among young Kenyan professionals/youth.
 - **Real-World Impact**: Practical skills for housing, transport, and investment decisions
 - **Monetization**: Freemium model with B2B partnerships and corporate training
 
@@ -29,8 +27,8 @@ An AI-powered microlearning platform that teaches financial literacy through gam
 - **Wealth Building**: Progress from KSh 50,000 to KSh 500,000 goal
 - **Real Scenarios**: Authentic Kenyan financial challenges
 
-### **🇰🇪 Kenyan Market Focus**
-- **Local Context**: Kilimani vs Kasarani housing decisions
+### **Kenyan Market Focus**
+- **Local Context**: Low-cost areas for housing decisions
 - **Transport Choices**: Matatus, boda bodas, and car ownership
 - **Investment Options**: SACCOs, NSE stocks, money market funds
 - **Healthcare**: NHIF coverage and medical expense management
@@ -71,11 +69,6 @@ Government Contracts:
 ✓ Youth financial literacy programs
 ✓ Civic education integration
 ```
-
-### **Revenue Projections**
-- **Year 1**: KSh 2.4M (200 premium users, 2 corporate clients)
-- **Year 2**: KSh 12M (1,000 premium users, 10 corporate clients)
-- **Year 3**: KSh 36M (3,000 premium users, 30 corporate clients)
 
 ## 🛠️ Technology Stack
 
@@ -124,8 +117,8 @@ Government Contracts:
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/yourusername/budgethero.git
-cd budgethero
+git clone https://github.com/yourusername/BudgetHero.git
+cd BudgetHero
 ```
 
 2. **Install dependencies:**
@@ -323,7 +316,7 @@ We welcome contributions from the community! Here's how you can help:
 ### **For Developers**
 1. Fork the repository
 2. Create a feature branch
-3. Add Kenyan financial scenarios
+3. Add financial scenarios
 4. Improve AI outcome logic
 5. Submit a pull request
 
@@ -348,13 +341,7 @@ We welcome contributions from the community! Here's how you can help:
 
 ### **Technical Support**
 - **Email**: support@budgethero.game
-- **GitHub Issues**: [Report bugs and feature requests](https://github.com/yourusername/budgethero/issues)
-- **Discord**: [Join our developer community](https://discord.gg/budgethero)
-
-### **Partnership Opportunities**
-- **Corporate Training**: partnerships@budgethero.game
-- **Bank Integrations**: banking@budgethero.game
-- **Government Programs**: government@budgethero.game
+- **GitHub Issues**: [Report bugs and feature requests](https://github.com/wlagho/BudgetHero/issues)
 
 ## 📄 License
 
@@ -365,7 +352,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Vibe Coding Hackathon** for the opportunity to build impactful solutions
 - **Supabase** for providing excellent backend infrastructure
 - **Kenyan Financial Community** for insights and feedback
-- **Beta Testers** from University of Nairobi and Strathmore University
 
 ---
 
@@ -382,4 +368,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 5. **Scalability**: Clear path from MVP to regional expansion
 6. **Social Impact**: Measurable improvement in financial decision-making
 
-**Ready to revolutionize financial education in Africa! 🚀**
+**Ready to assist with financial education in Africa! 🚀**
