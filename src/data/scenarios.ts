@@ -13,7 +13,7 @@ export interface Scenario {
   description: string
   situation: string
   choices: ScenarioChoice[]
-  category: 'housing' | 'food' | 'transportation' | 'emergency' | 'investment'
+  category: 'housing' | 'transport' | 'career' | 'emergency' | 'investment'
   difficulty: 'easy' | 'medium' | 'hard'
 }
 
@@ -21,27 +21,27 @@ export const scenarios: Scenario[] = [
   {
     id: 'rent_increase',
     title: 'Rent Shock!',
-    description: 'Your landlord just announced a $300/month rent increase!',
-    situation: 'You come home to find a letter under your door. Your rent is going up by $300 next month! Your current rent is $1,200/month. You have $2,000 in savings and make $3,500/month after taxes. What do you do?',
+    description: 'Your landlord just announced a KSh 15,000/month rent increase!',
+    situation: 'You come home to find a notice under your door. Your rent in Kilimani is going up by KSh 15,000 next month! Your current rent is KSh 60,000/month. You have KSh 100,000 in savings and earn KSh 175,000/month after tax. What do you do?',
     choices: [
       {
         id: 'negotiate',
-        text: 'Negotiate with the landlord',
+        text: 'Negotiate with the landlord using market research',
         aiPrompt: 'User chose to negotiate rent increase with landlord'
       },
       {
         id: 'move',
-        text: 'Look for a new apartment',
+        text: 'Look for a cheaper apartment in Kasarani or Kahawa',
         aiPrompt: 'User chose to move to find cheaper housing'
       },
       {
         id: 'accept',
-        text: 'Accept the increase and tighten budget',
+        text: 'Accept the increase and cut other expenses',
         aiPrompt: 'User chose to accept rent increase and cut expenses'
       },
       {
         id: 'roommate',
-        text: 'Find a roommate to share costs',
+        text: 'Find a roommate to share the costs',
         aiPrompt: 'User chose to find roommate to reduce housing costs'
       }
     ],
@@ -49,49 +49,49 @@ export const scenarios: Scenario[] = [
     difficulty: 'medium'
   },
   {
-    id: 'car_repair',
+    id: 'car_breakdown',
     title: 'Car Trouble',
     description: 'Your car broke down and needs expensive repairs!',
-    situation: 'Your car made a horrible noise and died on your way to work. The mechanic says it needs $1,500 in repairs. You need transportation to get to work, but this would wipe out most of your emergency fund. What\'s your move?',
+    situation: 'Your Toyota Vitz made a horrible noise and died on Thika Road during rush hour. The mechanic says it needs KSh 75,000 in engine repairs. You need transport to get to work in Westlands, but this would use most of your emergency fund. What\'s your move?',
     choices: [
       {
         id: 'repair',
-        text: 'Pay for the repairs',
+        text: 'Pay for the repairs at a trusted garage',
         aiPrompt: 'User chose to pay for expensive car repairs'
       },
       {
-        id: 'public_transport',
-        text: 'Use public transportation temporarily',
+        id: 'matatu',
+        text: 'Use matatus and boda bodas temporarily',
         aiPrompt: 'User chose public transport instead of car repair'
       },
       {
         id: 'used_car',
-        text: 'Buy a used car instead',
+        text: 'Buy another used car from Ngara',
         aiPrompt: 'User chose to buy used car instead of repairing'
       },
       {
         id: 'carpool',
-        text: 'Organize carpools with coworkers',
-        aiPrompt: 'User chose to carpool with coworkers'
+        text: 'Organize carpools with colleagues from your estate',
+        aiPrompt: 'User chose to carpool with colleagues'
       }
     ],
-    category: 'transportation',
+    category: 'transport',
     difficulty: 'hard'
   },
   {
     id: 'job_promotion',
     title: 'Promotion Opportunity',
-    description: 'You got a promotion offer, but it requires relocating!',
-    situation: 'Great news! You\'ve been offered a promotion with a 40% salary increase. The catch? You need to move to a new city with a higher cost of living. The company will cover moving expenses, but you\'ll need to break your lease early. What do you decide?',
+    description: 'You got a promotion offer, but it requires moving to Mombasa!',
+    situation: 'Great news! You\'ve been offered a promotion with a 40% salary increase to manage the Mombasa branch. The company will cover moving expenses, but you\'ll need to leave your life in Nairobi. The cost of living is slightly lower, but you\'ll be far from family. What do you decide?',
     choices: [
       {
         id: 'accept',
-        text: 'Accept the promotion and move',
+        text: 'Accept the promotion and move to Mombasa',
         aiPrompt: 'User accepted promotion requiring relocation'
       },
       {
         id: 'negotiate',
-        text: 'Try to negotiate remote work',
+        text: 'Try to negotiate remote work from Nairobi',
         aiPrompt: 'User wants to negotiate remote work for promotion'
       },
       {
@@ -101,37 +101,37 @@ export const scenarios: Scenario[] = [
       },
       {
         id: 'research',
-        text: 'Research the new city thoroughly first',
+        text: 'Research Mombasa thoroughly before deciding',
         aiPrompt: 'User chose to research new city before deciding'
       }
     ],
-    category: 'investment',
+    category: 'career',
     difficulty: 'medium'
   },
   {
     id: 'windfall',
-    title: 'Unexpected Money',
-    description: 'You received a $5,000 tax refund!',
-    situation: 'Surprise! You got a much larger tax refund than expected - $5,000! This is a nice chunk of money that could really help your financial situation. You have some credit card debt, no emergency fund, and have been wanting to invest. What\'s your strategy?',
+    title: 'Unexpected Bonus',
+    description: 'You received a KSh 250,000 performance bonus!',
+    situation: 'Surprise! Your company gave you a KSh 250,000 performance bonus for exceeding targets! This is a significant amount that could really improve your financial situation. You have some loans from digital lenders, no emergency fund, and have been wanting to invest. What\'s your strategy?',
     choices: [
       {
         id: 'emergency_fund',
-        text: 'Build emergency fund',
+        text: 'Build emergency fund in money market fund',
         aiPrompt: 'User chose to build emergency fund with windfall'
       },
       {
         id: 'pay_debt',
-        text: 'Pay off credit card debt',
-        aiPrompt: 'User chose to pay off debt with tax refund'
+        text: 'Pay off high-interest digital loans',
+        aiPrompt: 'User chose to pay off debt with bonus'
       },
       {
         id: 'invest',
-        text: 'Invest in index funds',
-        aiPrompt: 'User chose to invest windfall in index funds'
+        text: 'Invest in SACCO and buy Safaricom shares',
+        aiPrompt: 'User chose to invest windfall'
       },
       {
         id: 'split',
-        text: 'Split between debt, savings, and fun',
+        text: 'Split between debt, savings, and family support',
         aiPrompt: 'User chose to split windfall between multiple goals'
       }
     ],
@@ -142,26 +142,26 @@ export const scenarios: Scenario[] = [
     id: 'medical_emergency',
     title: 'Medical Emergency',
     description: 'You need an expensive medical procedure!',
-    situation: 'You need a medical procedure that costs $3,000 after insurance. You have $1,500 in savings and the procedure is necessary for your health. The hospital offers a payment plan, but you\'re worried about the debt. What do you do?',
+    situation: 'You need a medical procedure that costs KSh 150,000 after NHIF. You have KSh 75,000 in savings and the procedure is necessary for your health. The hospital offers a payment plan, but you\'re worried about the debt. What do you do?',
     choices: [
+      {
+        id: 'nhif',
+        text: 'Use NHIF and pay the balance',
+        aiPrompt: 'User chose to use NHIF for medical procedure'
+      },
       {
         id: 'payment_plan',
         text: 'Accept hospital payment plan',
         aiPrompt: 'User chose hospital payment plan for medical procedure'
       },
       {
-        id: 'personal_loan',
-        text: 'Take out a personal loan',
-        aiPrompt: 'User chose personal loan for medical expenses'
-      },
-      {
-        id: 'ask_family',
-        text: 'Ask family for help',
-        aiPrompt: 'User chose to ask family for financial help'
+        id: 'family',
+        text: 'Organize a family harambee for support',
+        aiPrompt: 'User chose to organize harambee for medical expenses'
       },
       {
         id: 'delay',
-        text: 'Delay the procedure to save money',
+        text: 'Delay the procedure to save money first',
         aiPrompt: 'User chose to delay medical procedure to save money'
       }
     ],

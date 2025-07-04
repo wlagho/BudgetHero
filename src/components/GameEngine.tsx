@@ -13,7 +13,9 @@ import {
   AlertCircle, 
   RotateCcw,
   Sparkles,
-  TrendingUp
+  TrendingUp,
+  Zap,
+  Star
 } from 'lucide-react'
 
 export const GameEngine: React.FC = () => {
@@ -44,7 +46,7 @@ export const GameEngine: React.FC = () => {
           await updateProgress({
             user_id: user.id,
             badges: [],
-            money_saved: 1000,
+            money_saved: 50000, // Starting with KSh 50,000
             current_scenario: 'rent_increase',
             scenario_state: {},
             created_at: new Date().toISOString(),
@@ -120,7 +122,7 @@ export const GameEngine: React.FC = () => {
       setError(null)
       if (progress) {
         await updateProgress({
-          money_saved: 1000,
+          money_saved: 50000, // Reset to KSh 50,000
           badges: [],
           current_scenario: 'rent_increase',
           scenario_state: {}
@@ -138,17 +140,17 @@ export const GameEngine: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-4">
+      <div className="min-h-screen bg-black crt-screen p-4">
         <div className="max-w-2xl mx-auto text-center mt-20">
-          <div className="glass-card p-8">
-            <AlertCircle className="w-16 h-16 mx-auto mb-4 text-red-400" />
-            <h2 className="text-2xl font-bold mb-4 text-red-400">Game Error</h2>
-            <p className="text-slate-300 mb-6">{error}</p>
+          <div className="retro-card p-8">
+            <AlertCircle className="w-16 h-16 mx-auto mb-4 text-retro-pink" />
+            <h2 className="text-xl font-pixel mb-4 text-retro-pink">GAME ERROR</h2>
+            <p className="text-retro-light-gray mb-6 text-sm">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="modern-button px-6 py-3"
+              className="pixel-button px-6 py-3"
             >
-              Reload Game
+              RELOAD GAME
             </button>
           </div>
         </div>
@@ -158,75 +160,68 @@ export const GameEngine: React.FC = () => {
 
   if (!currentScenario || !progress) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-black crt-screen flex items-center justify-center">
         <div className="text-center">
           <div className="spinner mx-auto mb-4"></div>
-          <p className="text-slate-300 text-lg">Loading your financial adventure...</p>
+          <p className="text-retro-teal text-sm font-pixel">LOADING ADVENTURE...</p>
           {isOfflineMode && (
-            <p className="text-amber-400 text-sm mt-2">Running in demo mode</p>
+            <p className="text-retro-yellow text-xs mt-2 font-pixel">DEMO MODE</p>
           )}
         </div>
       </div>
     )
   }
 
-  const progressPercentage = (progress.money_saved / 10000) * 100
-  const levelName = progress.money_saved < 2000 ? 'Beginner' : 
-                   progress.money_saved < 5000 ? 'Intermediate' : 
-                   progress.money_saved < 8000 ? 'Advanced' : 'Expert'
+  const progressPercentage = (progress.money_saved / 500000) * 100 // Goal: KSh 500,000
+  const levelName = progress.money_saved < 100000 ? 'BEGINNER' : 
+                   progress.money_saved < 250000 ? 'INTERMEDIATE' : 
+                   progress.money_saved < 400000 ? 'ADVANCED' : 'EXPERT'
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10 animate-pulse delay-1000"></div>
-      </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto p-4">
+    <div className="min-h-screen bg-black crt-screen">
+      <div className="max-w-7xl mx-auto p-4">
         {/* Header */}
         <header className="mb-8">
-          <div className="glass-card p-6">
+          <div className="retro-card p-6">
             <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl">
-                    <DollarSign className="w-6 h-6 text-white" />
+                  <div className="p-2 bg-retro-purple border-2 border-retro-teal">
+                    <DollarSign className="w-6 h-6 text-retro-teal" />
                   </div>
-                  <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                    BudgetHero
+                  <h1 className="text-2xl font-pixel text-retro-teal">
+                    BUDGETHERO
                   </h1>
                 </div>
                 
                 <div className="flex items-center gap-4">
-                  <div className={`flex items-center gap-2 text-2xl font-bold ${animatingMoney ? 'money-change' : ''}`}>
-                    <DollarSign className="w-6 h-6 text-green-400" />
-                    <span className="text-slate-100">${progress.money_saved.toLocaleString()}</span>
+                  <div className={`flex items-center gap-2 money-display ${animatingMoney ? 'money-change' : ''}`}>
+                    <span>KSh {progress.money_saved.toLocaleString()}</span>
                   </div>
                   
                   {isOfflineMode && (
-                    <div className="bg-amber-500/20 px-3 py-1 rounded-full text-xs text-amber-400 border border-amber-500/30">
-                      DEMO MODE
+                    <div className="bg-retro-yellow text-retro-black px-3 py-1 text-xs font-pixel">
+                      DEMO
                     </div>
                   )}
                 </div>
               </div>
               
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-3 text-slate-300">
-                  <Trophy className="w-5 h-5 text-purple-400" />
-                  <span>{progress.badges.length} badges</span>
+                <div className="flex items-center gap-2 text-retro-purple">
+                  <Trophy className="w-4 h-4" />
+                  <span className="text-xs font-pixel">{progress.badges.length} BADGES</span>
                 </div>
-                <div className="flex items-center gap-3 text-slate-300">
-                  <Target className="w-5 h-5 text-blue-400" />
-                  <span>{levelName}</span>
+                <div className="flex items-center gap-2 text-retro-teal">
+                  <Target className="w-4 h-4" />
+                  <span className="text-xs font-pixel">{levelName}</span>
                 </div>
                 <button
                   onClick={resetGame}
-                  className="modern-button bg-slate-700 hover:bg-slate-600 px-4 py-2 text-sm"
+                  className="pixel-button bg-retro-gray hover:bg-retro-light-gray px-4 py-2 text-xs"
                 >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  Reset
+                  <RotateCcw className="w-3 h-3 mr-2" />
+                  RESET
                 </button>
               </div>
             </div>
@@ -234,8 +229,8 @@ export const GameEngine: React.FC = () => {
             <div className="mt-6">
               <ProgressBar 
                 current={progress.money_saved} 
-                max={10000} 
-                label="Wealth Goal Progress"
+                max={500000} 
+                label="WEALTH GOAL PROGRESS"
               />
             </div>
           </div>
@@ -255,27 +250,27 @@ export const GameEngine: React.FC = () => {
           {/* Side Panel */}
           <div className="space-y-6">
             {/* Progress Stats */}
-            <div className="glass-card p-6">
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-slate-100">
-                <TrendingUp className="w-5 h-5 text-blue-400" />
-                Your Progress
+            <div className="retro-card p-6">
+              <h3 className="text-sm font-pixel mb-4 flex items-center gap-2 text-retro-teal">
+                <TrendingUp className="w-4 h-4" />
+                YOUR PROGRESS
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Current Wealth:</span>
-                  <span className="text-green-400 font-bold">${progress.money_saved.toLocaleString()}</span>
+                  <span className="text-xs text-retro-light-gray">Current Wealth:</span>
+                  <span className="text-retro-yellow font-pixel text-xs">KSh {progress.money_saved.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Badges Earned:</span>
-                  <span className="text-purple-400 font-bold">{progress.badges.length}</span>
+                  <span className="text-xs text-retro-light-gray">Badges Earned:</span>
+                  <span className="text-retro-purple font-pixel text-xs">{progress.badges.length}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Progress to Goal:</span>
-                  <span className="text-blue-400 font-bold">{progressPercentage.toFixed(1)}%</span>
+                  <span className="text-xs text-retro-light-gray">Progress to Goal:</span>
+                  <span className="text-retro-teal font-pixel text-xs">{progressPercentage.toFixed(1)}%</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Financial Level:</span>
-                  <span className="text-slate-100 font-bold">{levelName}</span>
+                  <span className="text-xs text-retro-light-gray">Financial Level:</span>
+                  <span className="text-retro-teal font-pixel text-xs">{levelName}</span>
                 </div>
               </div>
             </div>
@@ -283,28 +278,28 @@ export const GameEngine: React.FC = () => {
             {/* Badges */}
             <BadgeDisplay badges={progress.badges} />
 
-            {/* Financial Tips */}
-            <div className="glass-card p-6">
-              <h3 className="text-xl font-bold mb-4 flex items-center gap-2 text-slate-100">
-                <Sparkles className="w-5 h-5 text-yellow-400" />
-                Smart Money Tips
+            {/* Kenyan Financial Tips */}
+            <div className="retro-card p-6">
+              <h3 className="text-sm font-pixel mb-4 flex items-center gap-2 text-retro-yellow">
+                <Sparkles className="w-4 h-4" />
+                KENYAN MONEY TIPS
               </h3>
-              <div className="space-y-3 text-sm text-slate-300">
+              <div className="space-y-3 text-xs text-retro-light-gray">
                 <div className="flex items-start gap-2">
-                  <span className="text-green-400 mt-1">•</span>
-                  <span>Build an emergency fund before investing</span>
+                  <span className="text-retro-teal mt-1">•</span>
+                  <span>Keep NHIF contributions current for medical coverage</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-blue-400 mt-1">•</span>
-                  <span>Always negotiate when you have leverage</span>
+                  <span className="text-retro-purple mt-1">•</span>
+                  <span>Consider Kasarani/Kahawa for affordable housing</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-purple-400 mt-1">•</span>
-                  <span>Consider long-term costs, not just upfront prices</span>
+                  <span className="text-retro-yellow mt-1">•</span>
+                  <span>Join a SACCO for better savings rates</span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <span className="text-yellow-400 mt-1">•</span>
-                  <span>Diversify your financial strategies</span>
+                  <span className="text-retro-pink mt-1">•</span>
+                  <span>Avoid high-interest digital loans when possible</span>
                 </div>
               </div>
             </div>

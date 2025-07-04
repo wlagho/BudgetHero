@@ -14,11 +14,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ current, max, label })
     <div>
       <div className="flex justify-between items-center mb-3">
         <div className="flex items-center gap-2">
-          <Target className="w-5 h-5 text-blue-400" />
-          <span className="text-slate-300 font-medium">{label}</span>
+          <Target className="w-4 h-4 text-retro-teal" />
+          <span className="text-retro-teal font-pixel text-xs">{label}</span>
         </div>
-        <span className="text-slate-400 text-sm">
-          ${current.toLocaleString()} / ${max.toLocaleString()}
+        <span className="text-retro-light-gray text-xs font-pixel">
+          KSh {current.toLocaleString()} / KSh {max.toLocaleString()}
         </span>
       </div>
       
@@ -30,11 +30,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({ current, max, label })
       </div>
       
       <div className="flex justify-between items-center mt-2">
-        <span className="text-xs text-slate-500">
-          {percentage.toFixed(1)}% complete
+        <span className="text-xs text-retro-light-gray font-pixel">
+          {percentage.toFixed(1)}% COMPLETE
         </span>
-        <span className="text-xs text-slate-500">
-          ${(max - current).toLocaleString()} remaining
+        <span className="text-xs text-retro-light-gray font-pixel">
+          KSh {(max - current).toLocaleString()} REMAINING
         </span>
       </div>
     </div>
