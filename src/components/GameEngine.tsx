@@ -3,6 +3,9 @@ import { ScenarioCard } from './ScenarioCard'
 import { AIOutcomePopup } from './AIOutcomePopup'
 import { ProgressBar } from './ProgressBar'
 import { BadgeDisplay } from './BadgeDisplay'
+import { PricingModal } from './PricingModal'
+import { AICoachPanel } from './AICoachPanel'
+import { MicrolearningModal } from './MicrolearningModal'
 import { scenarios, getScenarioById, getRandomScenario, Scenario, ScenarioChoice } from '../data/scenarios'
 import { useAI, AIOutcome } from '../hooks/useAI'
 import { useSupabase } from '../hooks/useSupabase'
@@ -15,7 +18,10 @@ import {
   Sparkles,
   TrendingUp,
   Zap,
-  Star
+  Star,
+  Crown,
+  Brain,
+  BookOpen
 } from 'lucide-react'
 
 export const GameEngine: React.FC = () => {
@@ -24,6 +30,10 @@ export const GameEngine: React.FC = () => {
   const [lastOutcome, setLastOutcome] = useState<AIOutcome | null>(null)
   const [animatingMoney, setAnimatingMoney] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showPricing, setShowPricing] = useState(false)
+  const [showMicrolearning, setShowMicrolearning] = useState(false)
+  const [isPremium, setIsPremium] = useState(false)
+  const [dailyLessonsCompleted, setDailyLessonsCompleted] = useState(0)
   
   const { generateOutcome, loading: aiLoading } = useAI()
   const { user, progress, updateProgress, isOfflineMode } = useSupabase()
@@ -61,6 +71,16 @@ export const GameEngine: React.FC = () => {
     }
   }, [user, progress, updateProgress])
 
+  // Show microlearning modal on first visit or daily
+  useEffect(() => {
+    const lastLearningDate = localStorage.getItem('lastMicrolearningDate')
+    const today = new Date().toDateString()
+    
+    if (lastLearningDate !== today && progress && dailyLessonsCompleted === 0) {
+      setTimeout(() => setShowMicrolearning(true), 2000)
+    }
+  }, [progress, dailyLessonsCompleted])
+
   const handleChoice = async (choice: ScenarioChoice) => {
     if (!currentScenario || !progress) return
 
@@ -70,7 +90,8 @@ export const GameEngine: React.FC = () => {
       const outcome = await generateOutcome(choice.text, {
         scenario: currentScenario.title,
         currentMoney: progress.money_saved,
-        playerState: progress.scenario_state
+        playerState: progress.scenario_state,
+        isPremium
       })
 
       setLastOutcome(outcome)
@@ -138,6 +159,31 @@ export const GameEngine: React.FC = () => {
     }
   }
 
+  const handleUpgrade = (plan: string) => {
+    // In a real app, this would integrate with payment processing
+    if (plan === 'premium') {
+      setIsPremium(true)
+      setShowPricing(false)
+      // Simulate payment success
+      alert('🎉 Welcome to AI Coach Pro! Your premium features are now active.')
+    } else if (plan === 'enterprise') {
+      alert('📞 Our sales team will contact you within 24 hours to set up your corporate account.')
+      setShowPricing(false)
+    }
+  }
+
+  const handleLessonComplete = (lessonId: string) => {
+    setDailyLessonsCompleted(prev => prev + 1)
+    localStorage.setItem('lastMicrolearningDate', new Date().toDateString())
+    
+    // Award bonus money for completing lessons
+    if (progress) {
+      updateProgress({
+        money_saved: progress.money_saved + 2500 // KSh 2,500 bonus for learning
+      })
+    }
+  }
+
   if (error) {
     return (
       <div className="min-h-screen bg-black crt-screen p-4">
@@ -189,15 +235,32 @@ export const GameEngine: React.FC = () => {
                   <div className="p-2 bg-retro-purple border-2 border-retro-teal">
                     <DollarSign className="w-6 h-6 text-retro-teal" />
                   </div>
-                  <h1 className="text-2xl font-pixel text-retro-teal">
-                    BUDGETHERO
-                  </h1>
+                  <div>
+                    <h1 className="text-2xl font-pixel text-retro-teal">
+                      BUDGETHERO
+                    </h1>
+                    <p className="text-xs text-retro-purple font-pixel">AI MICROLEARNING COACH</p>
+                  </div>
                 </div>
                 
                 <div className="flex items-center gap-4">
                   <div className={`flex items-center gap-2 money-display ${animatingMoney ? 'money-change' : ''}`}>
                     <span>KSh {progress.money_saved.toLocaleString()}</span>
                   </div>
+                  
+                  {isPremium ? (
+                    <div className="bg-retro-purple text-retro-teal px-3 py-1 text-xs font-pixel flex items-center gap-2">
+                      <Crown className="w-3 h-3" />
+                      PRO
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setShowPricing(true)}
+                      className="bg-retro-yellow text-retro-black px-3 py-1 text-xs font-pixel hover:bg-retro-teal transition-colors"
+                    >
+                      UPGRADE
+                    </button>
+                  )}
                   
                   {isOfflineMode && (
                     <div className="bg-retro-yellow text-retro-black px-3 py-1 text-xs font-pixel">
@@ -208,6 +271,19 @@ export const GameEngine: React.FC = () => {
               </div>
               
               <div className="flex items-center gap-4">
+                <button
+                  onClick={() => setShowMicrolearning(true)}
+                  className="pixel-button bg-retro-purple hover:bg-retro-teal px-4 py-2 text-xs flex items-center gap-2"
+                >
+                  <BookOpen className="w-3 h-3" />
+                  DAILY LESSON
+                  {dailyLessonsCompleted > 0 && (
+                    <span className="bg-retro-teal text-retro-black px-2 py-1 text-xs">
+                      {dailyLessonsCompleted}
+                    </span>
+                  )}
+                </button>
+                
                 <div className="flex items-center gap-2 text-retro-purple">
                   <Trophy className="w-4 h-4" />
                   <span className="text-xs font-pixel">{progress.badges.length} BADGES</span>
@@ -239,7 +315,7 @@ export const GameEngine: React.FC = () => {
         {/* Main Game Area */}
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
           {/* Scenario Panel */}
-          <div className="xl:col-span-3">
+          <div className="xl:col-span-2">
             <ScenarioCard
               scenario={currentScenario}
               onChoice={handleChoice}
@@ -247,8 +323,15 @@ export const GameEngine: React.FC = () => {
             />
           </div>
 
-          {/* Side Panel */}
-          <div className="space-y-6">
+          {/* Side Panels */}
+          <div className="xl:col-span-2 space-y-6">
+            {/* AI Coach Panel */}
+            <AICoachPanel 
+              userProgress={progress}
+              isPremium={isPremium}
+              onUpgrade={() => setShowPricing(true)}
+            />
+
             {/* Progress Stats */}
             <div className="retro-card p-6">
               <h3 className="text-sm font-pixel mb-4 flex items-center gap-2 text-retro-teal">
@@ -272,11 +355,49 @@ export const GameEngine: React.FC = () => {
                   <span className="text-xs text-retro-light-gray">Financial Level:</span>
                   <span className="text-retro-teal font-pixel text-xs">{levelName}</span>
                 </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-retro-light-gray">Lessons Today:</span>
+                  <span className="text-retro-purple font-pixel text-xs">{dailyLessonsCompleted}</span>
+                </div>
               </div>
             </div>
 
             {/* Badges */}
             <BadgeDisplay badges={progress.badges} />
+
+            {/* Monetization CTA */}
+            {!isPremium && (
+              <div className="retro-card p-6 border-retro-yellow">
+                <h3 className="text-sm font-pixel mb-4 flex items-center gap-2 text-retro-yellow">
+                  <Zap className="w-4 h-4" />
+                  UNLOCK AI COACH PRO
+                </h3>
+                <div className="space-y-3 text-xs text-retro-light-gray mb-4">
+                  <div className="flex items-start gap-2">
+                    <span className="text-retro-teal mt-1">•</span>
+                    <span>Personal AI Financial Coach with voice support</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-retro-purple mt-1">•</span>
+                    <span>Real-time NSE market data integration</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-retro-yellow mt-1">•</span>
+                    <span>Advanced scenarios and unlimited gameplay</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-retro-pink mt-1">•</span>
+                    <span>Detailed analytics and goal tracking</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowPricing(true)}
+                  className="w-full pixel-button bg-retro-yellow text-retro-black text-xs py-3"
+                >
+                  UPGRADE FOR KSh 500/MONTH
+                </button>
+              </div>
+            )}
 
             {/* Kenyan Financial Tips */}
             <div className="retro-card p-6">
@@ -307,7 +428,7 @@ export const GameEngine: React.FC = () => {
         </div>
       </div>
 
-      {/* AI Outcome Popup */}
+      {/* Modals */}
       {showOutcome && lastOutcome && (
         <AIOutcomePopup
           outcome={lastOutcome}
@@ -316,6 +437,19 @@ export const GameEngine: React.FC = () => {
           moneyAfter={progress.money_saved}
         />
       )}
+
+      <PricingModal
+        isOpen={showPricing}
+        onClose={() => setShowPricing(false)}
+        onUpgrade={handleUpgrade}
+      />
+
+      <MicrolearningModal
+        isOpen={showMicrolearning}
+        onClose={() => setShowMicrolearning(false)}
+        onComplete={handleLessonComplete}
+        isPremium={isPremium}
+      />
     </div>
   )
 }
